@@ -1,24 +1,23 @@
 package model;
 
 public class buku {
-    private String judul;
-    private String penulis;
-    private String penerbit;
-    private int tahunTerbit;
-    private boolean tersedia;
+    public String judul;
+    public String penulis;
+    public int tahunTerbit;
+    public boolean isDipinjam;
 
-    public buku(String judul, String penulis, String penerbit, int tahunTerbit, boolean tersedia) {
+    public buku(String judul, String penulis, int tahunTerbit, boolean isDipinjam) {
         this.judul = judul;
         this.penulis = penulis;
-        this.penerbit = penerbit;
         this.tahunTerbit = tahunTerbit;
-        this.tersedia = tersedia;
+        this.isDipinjam = isDipinjam;
     }
+
     public void getDetailBook() {
         System.out.println("Judul       : " + judul);
         System.out.println("Penulis     : " + penulis);
-        System.out.println("Penerbit    : " + penerbit);
         System.out.println("Tahun Terbit: " + tahunTerbit);
-        System.out.println("Status      : " + (tersedia ? "Tersedia" : "Dipinjam"));
+        System.out.println("Status      : " + (isDipinjam ? "Sedang Dipinjam" : "Tersedia"));
+        System.out.println("----------------------------");
     }
 }
