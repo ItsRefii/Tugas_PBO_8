@@ -4,109 +4,105 @@ import model.buku;
 public class array {
     public static void main(String[] args) {
         buku[] koleksiBuku = new buku[5];
-        koleksiBuku[0] = new buku("The Great Gatsby", "F. Scott Fitzgerald", "Scribner", 1925, true);
-        koleksiBuku[1] = new buku("To Kill a Mockingbird", "Harper Lee", "J.B. Lippincott & Co.", 1960, true);
-        koleksiBuku[2] = new buku("1984", "George Orwell", "Secker & Warburg", 1949, true);
-        koleksiBuku[3] = new buku("Pride and Prejudice", "Jane Austen", "T. Egerton", 1813, true);
-        koleksiBuku[4] = new buku("The Catcher in the Rye", "J.D. Salinger", "Little, Brown and Company", 1951, true);
+        koleksiBuku[0] = new buku("Laskar Pelangi", "Andrea Hirata", 2005, false);
+        koleksiBuku[1] = new buku("Bumi Manusia", "Pramoedya Ananta Toer", 1980, false);
+        koleksiBuku[2] = new buku("5 cm", "Donny Dhirgantoro", 2005, false);
+        koleksiBuku[3] = new buku("Negeri 5 Menara", "Ahmad Fuadi", 2009, false);
+        koleksiBuku[4] = new buku("Ayat-Ayat Cinta", "Habiburrahman El Shirazy", 2004, false);
 
         Scanner input = new Scanner(System.in);
         int pilihan;
 
         do {
-            System.out.println("\n=== Perpustakaan Sederhana ===");
-            System.out.println("1. Lihat Koleksi Buku");
-            System.out.println("2. Cari Buku");
+            System.out.println("\n===== SISTEM PERPUSTAKAAN =====");
+            System.out.println("1. Lihat semua Buku");
+            System.out.println("2. Cari Buku berdasarkan judul");
             System.out.println("3. Pinjam Buku");
             System.out.println("4. Kembalikan Buku");
             System.out.println("0. Keluar");
-            System.out.print("Masukkan pilihan Anda: ");
-
-            if (input.hasNextInt()) {
-                pilihan = input.nextInt();
-            } else {
-                System.out.println("Input tidak valid. Silakan masukkan angka.");
-                input.next();
-                pilihan = -1;
-                continue;
-            }
+            System.out.print("Pilih menu: ");
+            pilihan = input.nextInt();
+            input.nextLine();
 
             switch (pilihan) {
                 case 1:
-                    System.out.println("\n=== Koleksi Buku ===");
-                    for (int i = 0; i < koleksiBuku.length; i++) {
-                        String status = koleksiBuku[i].isTersedia() ? " (Tersedia)" : " (Dipinjam)";
-                        System.out.println((i + 1) + ". " + koleksiBuku[i].getJudul() + status);
+                    System.out.println("\n--- Daftar Buku ---");
+                    for (buku b : koleksiBuku) {
+                        b.getDetailBook();
                     }
                     break;
 
                 case 2:
-                    input.nextLine();
-                    System.out.print("Masukkan judul buku yang dicari: ");
-                    String judulCari = input.nextLine();
-                    boolean found = false;
-                    System.out.println();
+                    System.out.print("Masukkan judul Buku yang dicari: ");
+                    String cari = input.nextLine();
+                    boolean ditemukan = false;
                     for (buku b : koleksiBuku) {
-                        if (b.getJudul().equalsIgnoreCase(judulCari)) {
+                        if (b.judul.equalsIgnoreCase(cari)) {
+                            System.out.println("\nBuku ditemukan:");
                             b.getDetailBook();
-                            found = true;
+                            ditemukan = true;
                             break;
                         }
                     }
-                    if (!found) {
-                        System.out.println("Buku tidak ditemukan.");
+                    if (!ditemukan) {
+                        System.out.println("Buku dengan judul \"" + cari + "\" tidak ditemukan.");
                     }
                     break;
 
                 case 3:
-                    System.out.print("Masukkan nomor buku yang ingin dipinjam: ");
-                    if (input.hasNextInt()) {
-                        int pinjamIndex = input.nextInt() - 1;
-                        if (pinjamIndex >= 0 && pinjamIndex < koleksiBuku.length) {
-                            buku b = koleksiBuku[pinjamIndex];
-                            if (b.isTersedia()) {
-                                b.setTersedia(false);
-                                System.out.println("Buku '" + b.getJudul() + "' berhasil dipinjam.");
+                    System.out.print("Masukkan judul Buku yang ingin dipinjam: ");
+                    String pinjam = input.nextLine();
+                    boolean ada = false;
+
+                    for (buku b : koleksiBuku) {
+                        if (b.judul.equalsIgnoreCase(pinjam)) {
+                            ada = true;
+                            if (!b.isDipinjam) {
+                                b.isDipinjam = true;
+                                System.out.println("Buku \"" + b.judul + "\" berhasil dipinjam!");
                             } else {
-                                System.out.println("Maaf, buku '" + b.getJudul() + "' sedang tidak tersedia.");
+                                System.out.println("Maaf, buku \"" + b.judul + "\" sedang dipinjam orang lain.");
                             }
-                        } else {
-                            System.out.println("Nomor buku tidak valid.");
+                            break;
                         }
-                    } else {
-                        System.out.println("Input tidak valid. Silakan masukkan nomor buku.");
-                        input.next();
+                    }
+
+                    if (!ada) {
+                        System.out.println("Buku tidak ditemukan di koleksi.");
                     }
                     break;
 
                 case 4:
-                    System.out.print("Masukkan nomor buku yang ingin dikembalikan: ");
-                    if (input.hasNextInt()) {
-                        int kembaliIndex = input.nextInt() - 1;
-                        if (kembaliIndex >= 0 && kembaliIndex < koleksiBuku.length) {
-                            buku b = koleksiBuku[kembaliIndex];
-                            if (!b.isTersedia()) {
-                                b.setTersedia(true);
-                                System.out.println("Buku '" + b.getJudul() + "' berhasil dikembalikan.");
+                    System.out.print("Masukkan judul Buku yang dikembalikan: ");
+                    String kembali = input.nextLine();
+                    boolean ditemukanKembali = false;
+
+                    for (buku b : koleksiBuku) {
+                        if (b.judul.equalsIgnoreCase(kembali)) {
+                            ditemukanKembali = true;
+                            if (b.isDipinjam) {
+                                b.isDipinjam = false;
+                                System.out.println("Buku \"" + b.judul + "\" berhasil dikembalikan!");
                             } else {
-                                System.out.println("Buku '" + b.getJudul() + "' sudah tersedia/belum pernah dipinjam.");
+                                System.out.println("Buku \"" + b.judul + "\" belum pernah dipinjam.");
                             }
-                        } else {
-                            System.out.println("Nomor buku tidak valid.");
+                            break;
                         }
-                    } else {
-                        System.out.println("Input tidak valid. Silakan masukkan nomor buku.");
-                        input.next(); 
+                    }
+
+                    if (!ditemukanKembali) {
+                        System.out.println("Buku tidak ditemukan di koleksi.");
                     }
                     break;
 
                 case 0:
-                    System.out.println("Terima kasih telah menggunakan perpustakaan sederhana. Sampai jumpa!");
+                    System.out.println("Keluar dari sistem...");
                     break;
 
                 default:
-                    System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+                    System.out.println("Pilihan tidak valid!");
             }
+
         } while (pilihan != 0);
 
         input.close();
