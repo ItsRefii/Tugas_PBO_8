@@ -14,31 +14,6 @@ public class buku {
         this.tahunTerbit = tahunTerbit;
         this.tersedia = tersedia;
     }
-
-    public String getJudul() {
-        return judul;
-    }
-
-    public String getPenulis() {
-        return penulis;
-    }
-
-    public String getPenerbit() {
-        return penerbit;
-    }
-
-    public int getTahunTerbit() {
-        return tahunTerbit;
-    }
-
-    public boolean isTersedia() {
-        return tersedia;
-    }
-
-    public void setTersedia(boolean tersedia) {
-        this.tersedia = tersedia;
-    }
-
     public void getDetailBook() {
         System.out.println("Judul       : " + judul);
         System.out.println("Penulis     : " + penulis);
