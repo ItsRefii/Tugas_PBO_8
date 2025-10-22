@@ -41,7 +41,7 @@ public class array {
                     break;
 
                 case 2:
-                    input.nextLine(); // bersihkan buffer
+                    input.nextLine();
                     System.out.print("Masukkan judul buku yang dicari: ");
                     String judulCari = input.nextLine();
                     boolean found = false;
